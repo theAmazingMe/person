@@ -1,0 +1,5 @@
+/.idea
+target/
+*.iml
+**/openapi-generator-cli-*.jar
+/generated/

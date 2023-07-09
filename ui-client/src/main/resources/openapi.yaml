@@ -1,0 +1,138 @@
+openapi: 3.0.3
+info:
+  description: This is a sample person store Server based on the OpenAPI 3.0 specification.  You
+    can find out more about
+  title: Swagger Person - OpenAPI 3.0
+  version: 1.0.0
+servers:
+- url: http://localhost:8081
+tags:
+- description: Everything about your people
+  name: person
+paths:
+  /people:
+    get:
+      description: Finds all people listed
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Person'
+                type: array
+          description: successful operation
+      tags:
+      - people
+      x-accepts: application/json
+      x-tags:
+      - tag: people
+    post:
+      description: Finds all people listed
+      parameters:
+      - description: firstname of the person
+        explode: true
+        in: query
+        name: firstname
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Status of pet that needs to be updated
+        explode: true
+        in: query
+        name: lastname
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: birthday
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          description: successful operation
+      tags:
+      - people
+      x-accepts: application/json
+      x-tags:
+      - tag: people
+  /people/{id}:
+    get:
+      description: Finds a person by it's ID
+      parameters:
+      - description: ID of person to return
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Person'
+          description: successful operation
+        "404":
+          description: Person not found
+      tags:
+      - people
+      x-accepts: application/json
+      x-tags:
+      - tag: people
+components:
+  schemas:
+    Person:
+      example:
+        birthday: birthday
+        firstname: firstname
+        id: 0
+        lastname: lastname
+      properties:
+        id:
+          format: int64
+          type: integer
+        lastname:
+          type: string
+        firstname:
+          type: string
+        birthday:
+          type: string
+      required:
+      - birthday
+      - firstname
+      - id
+      - lastname
+      type: object
+    ProposePerson:
+      properties:
+        lastname:
+          type: string
+        firstname:
+          type: string
+        birthday:
+          type: object
+      required:
+      - birthday
+      - firstname
+      - lastname
+      type: object
+    Error:
+      properties:
+        code:
+          format: int32
+          type: integer
+        message:
+          type: string
+      required:
+      - code
+      - message
+      type: object
